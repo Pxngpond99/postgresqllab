@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% for tag in tags %}
+<div class="card my-3">
+  <div class="card-body">
+    <h4 class="card-title nav justify-content-between">{{ tag.name }}
+      <div>
+        <a href="{{ url_for('tags_view', tag_name=tag.name) }}" class="btn btn-primary"> View</a>
+        <a href="{{ url_for('tags_edit', tag_name=tag.name) }}" class="btn btn-primary"> Edit</a>
+        <a href="{{ url_for('tags_delete', tag_name=tag.name) }}" class="btn btn-danger"> Delete</a>
+      </div>
+    </h4>
+    <div class="card-footer text-muted">
+      Note(s) : {{ tag.get_all_notes() }} notes
+      <br>
+      Last update: {{ tag.created_date }}
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

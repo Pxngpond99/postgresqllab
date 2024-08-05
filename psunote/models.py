@@ -37,6 +37,15 @@ class Tag(db.Model):
 
     created_date = mapped_column(sa.DateTime(timezone=True), server_default=func.now())
 
+    def get_all_notes(self):
+        notes = (
+            db.session.query(func.count())
+            .select_from(Note)
+            .join(Note.tags)
+            .filter(Note.tags.any(id=self.id))
+        )
+        return notes.scalar()
+
 
 class Note(db.Model):
     __tablename__ = "notes"
